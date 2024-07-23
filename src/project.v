@@ -46,6 +46,5 @@ module tt_um_aialra_riscv_pipeline_cpu (
     assign uio_oe = 8'b11111111;
 
     // Unused pins
-    assign uio_out[7:1] = 7'b0000000; 
-	assign ui_in[7:2] = 6'b000000; 
+    assign uio_out[7:1] = 7'b0000000;
 endmodule
