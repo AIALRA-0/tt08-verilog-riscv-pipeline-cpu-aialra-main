@@ -74,6 +74,10 @@ module Data_Memory
     // Sequential logic: reset and write operations
     always @(posedge clk or posedge reset) begin
         if (reset) begin
+            // Clear memory on reset
+            for (i = 0; i < DEPTH; i = i + 1) begin
+                memory[i] <= 32'b0;
+            end
             data_mem_tx_data_ready <= 0;
             uart_tx_data_out <= 42'b0; // Ensure uart_tx_data_out is cleared on reset
         end else begin

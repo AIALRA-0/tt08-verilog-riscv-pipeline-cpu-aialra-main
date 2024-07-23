@@ -33,11 +33,6 @@ module ALU
     wire _unused = &{mult_result[31:0]};
 	
     always @(*) begin
-        // Initialize default values to avoid latches
-        mult_result = 64'b0; // Default value for mult_result
-        result = 32'b0; // Default value for result
-        zero = 1'b0; // Default value for zero
-        
         case (alu_control)
             6'b000001: result = a + b;  // Addition
             6'b000010: result = a - b;  // Subtraction
