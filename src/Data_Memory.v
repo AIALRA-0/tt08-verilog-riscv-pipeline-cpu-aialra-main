@@ -44,7 +44,7 @@ module Data_Memory
 	assign data_mem0 = memory[0];
 	
 	// List all unused inputs to prevent warnings
-	wire _unused = &{address[31:9], address[1:0]};
+	wire _unused = &{address[31:7], address[1:0]};
 	
     // Calculate the number of address bits
     function integer addr_bits;
