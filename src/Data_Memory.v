@@ -38,11 +38,11 @@ module Data_Memory
     input wire rw_flag,        // Read/Write flag
     output reg [41:0] uart_tx_data_out, // UART data output
     output reg data_mem_tx_data_ready, // Data ready signal
-    output wire [31:0] data_mem0 // Data from mem[0]
+	output wire [31:0] data_mem0 // Data from mem[0]
 );
 
-    assign data_mem0 = memory[0];
-    
+	assign data_mem0 = memory[0];
+	
     // Calculate the number of address bits
     function integer addr_bits;
         input integer depth;
@@ -83,10 +83,10 @@ module Data_Memory
                 data_mem_tx_data_ready <= 0;
             end else if (!enable && write_mem_req && target_mem_type == 0) begin
                 if (rw_flag) begin
-                    memory[target_addr[ADDR_BITS-1:0]] <= uart_rx_data_in; // Write UART data to target address
+                    memory[target_addr] <= uart_rx_data_in; // Write UART data to target address
                     data_mem_tx_data_ready <= 0;
                 end else begin
-                    uart_tx_data_out <= {1'b0, target_addr, memory[target_addr[ADDR_BITS-1:0]]}; // Read data to UART data output
+                    uart_tx_data_out <= {1'b0, target_addr, memory[target_addr]}; // Read data to UART data output
                     data_mem_tx_data_ready <= 1; // Data ready after read operation
                 end
             end else begin

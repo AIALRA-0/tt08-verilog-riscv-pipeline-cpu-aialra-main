@@ -18,6 +18,8 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`default_nettype none
+
 module UART_Bytes_RX #(
     parameter BYTE_COUNT = 4,  // Default receive 4 bytes
     parameter DATA_BITS = 12   // Number of data bits per byte
@@ -39,10 +41,10 @@ module UART_Bytes_RX #(
                DONE         = 3'd3;  // Done state
 
     reg [2:0] state, next_state;  // Current and next state
-    reg [3:0] byte_counter;  // Byte counter to track received bytes
+    reg [$clog2(BYTE_COUNT)-1:0] byte_counter;  // Byte counter to track received bytes
     wire [DATA_BITS-1:0] current_byte;  // Currently received byte
     wire byte_done;  // Byte receive complete signal
-    reg [DATA_BITS-1:0] header;  // Packet header information
+    reg [11:0] header;  // Packet header information
 
     // Instantiate UART receive module
     UART_Bits_RX #(
@@ -86,7 +88,7 @@ module UART_Bytes_RX #(
             end
             HANDSHAKE: begin
                 if (byte_done) begin
-                    header = current_byte;  // Read packet header
+                    header = {header[3:0], current_byte};  // Read packet header
                     if (header[11:10] == 2'b11) begin  // Confirm write handshake packet
                         rw_flag = header[11];
                         target_mem_type = header[9];
@@ -115,12 +117,6 @@ module UART_Bytes_RX #(
                 done = 1;  // Receive complete signal active
                 next_state = IDLE;  // Return to idle state, waiting for the next receive
             end
-<<<<<<< HEAD
-=======
-			default: begin
-				next_state = IDLE;  // Default to IDLE state
-			end
->>>>>>> parent of 88fffc3 (Fixed infered latches)
         endcase
     end
 

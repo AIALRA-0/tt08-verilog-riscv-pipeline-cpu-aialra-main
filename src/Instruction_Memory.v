@@ -98,12 +98,11 @@ module Instruction_Memory
     always @(posedge clk) begin
         if (!enable && write_mem_req && target_mem_type) begin
             if (rw_flag) begin
-                memory[target_addr[ADDR_BITS-1:0]] <= uart_rx_data_in; // Write data to target memory address
+                memory[target_addr] <= uart_rx_data_in; // Write data to target memory address
                 instr_mem_tx_data_ready <= 0; // Data not ready after write operation
             end else begin
-                uart_tx_data_out <= {1'b1, target_addr, memory[target_addr[ADDR_BITS-1:0]]}; // Read data to UART data output
+                uart_tx_data_out <= {1'b1, target_addr, memory[target_addr]}; // Read data to UART data output
                 instr_mem_tx_data_ready <= 1; // Data ready after read operation
-                $display("Read Data from Instruction Memory: uart_tx_data_out = %h", uart_tx_data_out); // Print uart_tx_data_out
             end
         end else begin
             instr_mem_tx_data_ready <= 0; // Data not ready in other cases
