@@ -39,7 +39,7 @@ module Instruction_Memory
 );
 	
 	// List all unused inputs to prevent warnings
-	wire _unused = &{pc[31:9], pc[1:0]};
+	wire _unused = &{pc[31:$clog2(DEPTH)+2], pc[1:0]};
 
     // Calculate the number of address bits
     function integer addr_bits;
