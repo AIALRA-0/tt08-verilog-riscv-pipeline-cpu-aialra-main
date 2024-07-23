@@ -67,14 +67,19 @@ module Data_Memory
             memory[i] = 32'b0;
         end
     end
+	
+	// Comb logic for reset
+	always @(*) begin
+		if (reset) begin
+			for (i = 0; i < DEPTH; i = i + 1) begin
+				memory[i] = 32'b0; // 使用阻塞赋值来初始化内存
+			end
+		end
+	end
 
     // Sequential logic: reset and write operations
     always @(posedge clk or posedge reset) begin
         if (reset) begin
-            // Clear memory on reset
-            for (i = 0; i < DEPTH; i = i + 1) begin
-                memory[i] <= 32'b0;
-            end
             data_mem_tx_data_ready <= 0;
             uart_tx_data_out <= 42'b0; // Ensure uart_tx_data_out is cleared on reset
         end else begin
