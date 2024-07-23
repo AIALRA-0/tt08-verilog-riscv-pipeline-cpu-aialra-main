@@ -44,7 +44,6 @@ module UART_Bytes_RX #(
     reg [3:0] byte_counter;  // Byte counter to track received bytes
     wire [11:0] current_byte;  // Currently received byte
     wire byte_done;  // Byte receive complete signal
-    reg [11:0] header;  // Packet header information
 
     // Instantiate UART receive module
     UART_Bits_RX #(
@@ -63,21 +62,18 @@ module UART_Bytes_RX #(
             state <= IDLE;  // Enter idle state on reset
             byte_counter <= 0;  // Reset byte counter
             data_out <= 0;  // Clear output data on reset
-			done <= 0;  // Clear done signal on reset
             rw_flag <= 0;  // Clear read/write flag on reset
             target_mem_type <= 0;  // Clear target memory type on reset
             target_addr <= 0;  // Clear target address on reset
-            header <= 0;  // Clear header on reset
         end else begin
             state <= next_state;  // Enter next state
             if (state == IDLE) begin
                 byte_counter <= 0;  // Reset byte counter in idle state
             end else if (state == HANDSHAKE && byte_done) begin
-                header <= current_byte;  // Read packet header
-                if (header[11:10] == 2'b11 || header[11:10] == 2'b01) begin
-                    rw_flag <= header[11];
-                    target_mem_type <= header[9];
-                    target_addr <= header[8:0];
+                if (current_byte[11:10] == 2'b11 || current_byte[11:10] == 2'b01) begin
+                    rw_flag <= current_byte[11];
+                    target_mem_type <= current_byte[9];
+                    target_addr <= current_byte[8:0];
                 end
 			end else if (state == RECEIVE_BYTE && byte_done) begin
                 byte_counter <= byte_counter + 1;  // Increment byte counter in RECEIVE_BYTE state when byte is done
@@ -99,10 +95,9 @@ module UART_Bytes_RX #(
             end
             HANDSHAKE: begin
                 if (byte_done) begin
-                    header = current_byte;  // Read packet header
-                    if (header[11:10] == 2'b11) begin  // Confirm write handshake packet
+                    if (current_byte[11:10] == 2'b11) begin  // Confirm write handshake packet
                         next_state = RECEIVE_BYTE;  // Enter receive byte state
-                    end else if (header[11:10] == 2'b01) begin  // Confirm read handshake packet
+                    end else if (current_byte[11:10] == 2'b01) begin  // Confirm read handshake packet
                         next_state = DONE;  // Directly enter done state
                     end else begin
                         next_state = IDLE;  // Non-handshake packet, return to idle state

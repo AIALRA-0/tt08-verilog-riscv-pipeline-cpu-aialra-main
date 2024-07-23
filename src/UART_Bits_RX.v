@@ -51,7 +51,9 @@ module UART_Bits_RX #(
             if (state == RECEIVE_BITS) begin
                 data_reg[bit_counter] <= rx;  // Update data register in RECEIVE_BITS state
                 bit_counter <= bit_counter + 1;  // Update bit counter in RECEIVE_BITS state
-            end else begin
+            end else if ((state == STOP_BIT) && (rx == 1)) begin
+                data_out <= data_reg;  // Output received data
+			end else begin
                 bit_counter <= 0;  // Reset bit counter in other states
             end
         end
@@ -79,7 +81,6 @@ module UART_Bits_RX #(
             end
             STOP_BIT: begin
                 if (rx == 1) begin  // Detect stop bit (logic 1)
-                    data_out = data_reg;  // Output received data
                     next_state = DONE;  // Enter done state
                 end else begin
                     next_state = IDLE;  // Return to idle state if stop bit is not logic 1
