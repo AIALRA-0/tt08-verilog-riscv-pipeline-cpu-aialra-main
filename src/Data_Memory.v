@@ -40,9 +40,6 @@ module Data_Memory
     output reg data_mem_tx_data_ready, // Data ready signal
 	output wire [31:0] data_mem0 // Data from mem[0]
 );
-
-	assign data_mem0 = memory[0];
-	
 	// List all unused inputs to prevent warnings
 	wire _unused = &{address[31:$clog2(DEPTH)+2], address[1:0]};
 	
@@ -70,6 +67,8 @@ module Data_Memory
             memory[i] = 32'b0;
         end
     end
+    
+    assign data_mem0 = memory[0];
 	
 	// Register to handle memory reset logic
 	reg [31:0] mem_reset_val;
