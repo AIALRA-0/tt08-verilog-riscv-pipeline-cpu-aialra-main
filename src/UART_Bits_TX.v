@@ -99,6 +99,9 @@ module UART_Bits_TX #(
             START_NEXT: begin
                 next_state = START_BIT;  // Directly enter start bit state
             end
+			default: begin
+				next_state = IDLE; 
+			end
         endcase
     end
 

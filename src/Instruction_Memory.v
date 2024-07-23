@@ -37,6 +37,9 @@ module Instruction_Memory
     output reg [41:0] uart_tx_data_out, // UART data output
     output reg instr_mem_tx_data_ready  // Data ready signal
 );
+	
+	// List all unused inputs to prevent warnings
+	wire _unused = &{pc[31:9], pc[1:0]};
 
     // Calculate the number of address bits
     function integer addr_bits;

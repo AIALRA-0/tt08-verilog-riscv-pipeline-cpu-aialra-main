@@ -28,6 +28,9 @@ module ALU
 );
 
     reg [63:0] mult_result; // Used to store 64-bit multiplication result
+	
+	// List all unused inputs to prevent warnings
+	wire _unused = &{mult_result[31:0]};
 
     always @(*) begin
 		zero = 0;

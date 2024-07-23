@@ -47,6 +47,9 @@ module Control_Unit
     reg ImmLoad_reg;
     reg [2:0] DataMemOutOp_reg;
     reg WriteBackRegSrc_reg; // New register variable
+	
+	// List all unused inputs to prevent warnings
+	wire _unused = &{instr[31:15], instr[11:7]};
 
     always @(*) begin
         case (instr[6:0])

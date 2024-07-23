@@ -47,4 +47,9 @@ module tt_um_aialra_riscv_pipeline_cpu (
 
     // Unused pins
     assign uio_out[7:1] = 7'b0000000;
+	
+	// List all unused inputs to prevent warnings
+	wire _unused = &{ui_in[7:2], uio_in, ena, count_value[31:4]};
+	assign uo_out[7] = 0;
+	
 endmodule
