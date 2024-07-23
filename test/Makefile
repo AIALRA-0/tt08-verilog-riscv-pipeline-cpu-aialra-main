@@ -21,7 +21,6 @@ PC.v \
 pipeline_register.v \
 Register_File.v \
 RISCV_Pipeline_CPU.v \
-RISCV_Pipeline_Display_Counter.v \
 Seven_Segment_Display.v \
 UART_Bits_RX.v \
 UART_Bits_TX.v \
