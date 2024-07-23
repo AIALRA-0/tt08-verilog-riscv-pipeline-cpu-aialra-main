@@ -72,7 +72,14 @@ module UART_Bytes_RX #(
             state <= next_state;  // Enter next state
             if (state == IDLE) begin
                 byte_counter <= 0;  // Reset byte counter in idle state
-            end else if (state == RECEIVE_BYTE && byte_done) begin
+            end else if (state == HANDSHAKE && byte_done) begin
+                header <= current_byte;  // Read packet header
+                if (header[11:10] == 2'b11 || header[11:10] == 2'b01) begin
+                    rw_flag <= header[11];
+                    target_mem_type <= header[9];
+                    target_addr <= header[8:0];
+                end
+			end else if (state == RECEIVE_BYTE && byte_done) begin
                 byte_counter <= byte_counter + 1;  // Increment byte counter in RECEIVE_BYTE state when byte is done
                 data_out[(BYTE_COUNT-1-byte_counter)*8 +: 8] <= current_byte[7:0];  // Store the lower 8 bits of the current byte in the output data
             end
@@ -94,14 +101,8 @@ module UART_Bytes_RX #(
                 if (byte_done) begin
                     header = current_byte;  // Read packet header
                     if (header[11:10] == 2'b11) begin  // Confirm write handshake packet
-                        rw_flag = header[11];
-                        target_mem_type = header[9];
-                        target_addr = header[8:0];
                         next_state = RECEIVE_BYTE;  // Enter receive byte state
                     end else if (header[11:10] == 2'b01) begin  // Confirm read handshake packet
-                        rw_flag = header[11];
-                        target_mem_type = header[9];
-                        target_addr = header[8:0];
                         next_state = DONE;  // Directly enter done state
                     end else begin
                         next_state = IDLE;  // Non-handshake packet, return to idle state
