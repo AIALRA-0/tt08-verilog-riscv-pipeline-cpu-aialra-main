@@ -10,7 +10,7 @@ async def test_project(dut):
     dut._log.info("Start")
     
     # Set instruction memory size
-    INSTR_MEM_SIZE = 16
+    INSTR_MEM_SIZE = 32
 
     # Set clock period to 10 nanoseconds (100 MHz)
     clock = Clock(dut.clk, 10, units="ns")
