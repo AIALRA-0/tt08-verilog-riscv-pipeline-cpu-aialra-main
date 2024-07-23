@@ -59,8 +59,10 @@ module UART_Bits_RX #(
 
     // State machine logic: determine next state and output based on current state and input signals
     always @(*) begin
+        // Initialize default values to avoid latches
         next_state = state;  // Default to current state
         done = 0;            // Default receive not done
+        data_reg = data_reg; // Retain current value of data_reg by default
 
         case (state)
             IDLE: begin
@@ -96,9 +98,9 @@ module UART_Bits_RX #(
             START_NEXT: begin
                 next_state = RECEIVE_BITS;  // Directly enter receive data bits state
             end
-			default: begin
-				next_state = IDLE;  // Default to IDLE state
-			end
+            default: begin
+                next_state = IDLE;  // Default to IDLE state
+            end
         endcase
     end
 

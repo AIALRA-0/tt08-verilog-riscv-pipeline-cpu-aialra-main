@@ -50,12 +50,15 @@ async def test_project(dut):
 
     # UART write function
     async def uart_write(target_mem, target_addr, data):
+        # Construct handshake packet
         handshake_packet = (1 << 11) | (1 << 10) | (target_mem << 9) | target_addr
         await send_packet(handshake_packet)
-        for _ in range(4):
-            data_packet = (data >> 24) & 0x3FF
+        dut._log.info(f"Sent handshake packet: Target memory type = {'Instruction Memory' if target_mem else 'Data Memory'}, Address = {target_addr}, Handshake packet = {handshake_packet:012b}")
+        # Send data packets
+        for i in range(4):
+            data_packet = (data >> (24 - 8 * i)) & 0xFF
             await send_packet(data_packet)
-            data <<= 8
+        dut._log.info(f"UART write complete: Target memory type = {'Instruction Memory' if target_mem else 'Data Memory'}, Address = {target_addr}, Data = {data:X}")
 
     # UART read function
     async def uart_read(target_mem, target_addr):
@@ -124,7 +127,7 @@ async def test_project(dut):
         await uart_write(1, i, instruction)
 
     await uart_write(0, 14, 0xCA54FE03)
-    await uart_read(1, 1)
+    await uart_read(0, 1)
     await uart_read(0, 14)
 
     await ClockCycles(dut.clk, 2)
