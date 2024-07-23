@@ -1,29 +1,50 @@
 # Tiny Tapeout project information
 project:
-  title:        ""      # Project title
-  author:       ""      # Your name
-  discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  ""      # One line description of what your project does
+  title:        "RISC-V 5-Stage Pipeline CPU"      # Project title
+  author:       "Lucas Ding"      # Your name
+  discord:      "aialra"      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
+  description:  "A RISC-V 5-stage pipeline CPU implementation."      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
+  clock_hz:     100000000       # Clock frequency in Hz (e.g., 100 MHz)
 
   # How many tiles your design occupies? A single tile is about 167x108 uM.
-  tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
+  tiles: "2x2"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
 
   # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  top_module:  "tt_um_example"
+  top_module:  "tt_um_aialra_riscv_pipeline_cpu"
 
   # List your project's source files here.
   # Source files must be in ./src and you must list each source file separately, one per line.
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
     - "project.v"
+    - "adder.v"
+    - "ALU.v"
+    - "ALU_Control.v"
+    - "Control_Unit.v"
+    - "Data_Memory.v"
+    - "Data_Memory_Handler.v"
+    - "Forwarding_Unit.v"
+    - "Immediate_Generator.v"
+    - "Instruction_Memory.v"
+    - "mux2to1.v"
+    - "mux3to1.v"
+    - "PC.v"
+    - "pipeline_register.v"
+    - "Register_File.v"
+    - "RISCV_Pipeline_CPU.v"
+    - "RISCV_Pipeline_Display_Counter.v"
+    - "Seven_Segment_Display.v"
+    - "UART_Bits_RX.v"
+    - "UART_Bits_TX.v"
+    - "UART_Bytes_RX.v"
+    - "UART_Bytes_TX.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
+  ui[0]: "enable"
+  ui[1]: "uart_rx"
   ui[2]: ""
   ui[3]: ""
   ui[4]: ""
@@ -32,7 +53,7 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: ""
+  uo[0]: "uart_tx"
   uo[1]: ""
   uo[2]: ""
   uo[3]: ""
@@ -42,7 +63,7 @@ pinout:
   uo[7]: ""
 
   # Bidirectional pins
-  uio[0]: ""
+  uio[0]: "uart_tx"
   uio[1]: ""
   uio[2]: ""
   uio[3]: ""

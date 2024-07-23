@@ -16,6 +16,7 @@ fe2190e3 // 0x002c: bne x3, x2, -32         // If x3 != x2, jump to loop start (
 00000193 // 0x0034: addi x3, x0, 0          // x3 = 0
 01800067 // 0x0038: jalr x0, 24(x0)         // Unconditional jump to loop start (equal)
 
+
 // Valid Instructions
 // add: addition
 // sub: subtraction

@@ -1,20 +1,26 @@
 // RISC-V Instruction Memory
 @0000
-00000013 // 0x0000: nop
-00000093 // 0x0004: addi x1, x0, 0          // x1 = 0
-00900113 // 0x0008: addi x2, x0, 9          // x2 = 9
-00000013 // 0x000c: nop                     // Loop start (not equal)
-00000013 // 0x0010: nop 
-00000013 // 0x0014: nop
-00000013 // 0x0018: nop                     // Loop start (equal) waiting for x1 to be zeroed
-00102023 // 0x001c: sw x1, 0(x0)            // x1 -> mem[0]
-00002183 // 0x0020: lw x3, 0(x0)            // mem[0] -> x3
-00108093 // 0x0024: addi x1, x1, 1          // x1 += 1
-00000013 // 0x0028: nop                     // Wait, ensure x3 is synchronized
-fe2190e3 // 0x002c: bne x3, x2, -32         // If x3 != x2, jump to loop start (not equal)
-00000093 // 0x0030: addi x1, x0, 0          // x1 = 0, reset counter
-00000193 // 0x0034: addi x3, x0, 0          // x3 = 0
-01800067 // 0x0038: jalr x0, 24(x0)         // Unconditional jump to loop start (equal)
+00000013 // nop
+00000093 // addi x1, x0, 0          // x1 = 0
+00900113 // addi x2, x0, 9          // x2 = 9
+000f4237 // lui x4, 0x000f4         // x4 = 0x000f4000
+24020213 // addi x4, x4, 0x240      // x4 = 0x000f4240 = 1000000
+00000013 // nop                     // Loop start (not equal)
+00000013 // nop 
+00000013 // nop
+00000013 // nop                     // Loop start (equal) waiting for x1 to be zeroed
+00102023 // sw x1, 0(x0)            // x1 -> mem[0]
+00002183 // lw x3, 0(x0)            // mem[0] -> x3
+00100293 // addi x5, x0, 1          // x5 = 1
+00128293 // addi x5, x5, 1          // x5 += 1       // Loop start (counting)
+fe521ee3 // bne x4, x5, -4          // If x4 != x5, jump to loop start (counting)
+00108093 // addi x1, x1, 1          // x1 += 1
+00000013 // nop                     // Wait, ensure x3 is synchronized
+fe2190e3 // bne x3, x2, -44         // If x3 != x2, jump to loop start (not equal)
+00000093 // addi x1, x0, 0          // x1 = 0, reset counter
+00000193 // addi x3, x0, 0          // x3 = 0
+01800067 // jalr x0, 32(x0)         // Unconditional jump to loop start (equal)
+
 
 // Valid Instructions
 // add: addition

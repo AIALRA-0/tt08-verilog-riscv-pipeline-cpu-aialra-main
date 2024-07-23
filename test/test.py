@@ -106,6 +106,16 @@ async def test_project(dut):
         # Skip stop bit
         await ClockCycles(dut.clk, 2)
         return packet
+    
+    async def cpu_pause():
+        await ClockCycles(dut.clk, 1)
+        dut.ui_in[0].value = 0
+        await ClockCycles(dut.clk, 1)
+        
+    async def cpu_start():
+        await ClockCycles(dut.clk, 1)
+        dut.ui_in[0].value = 1
+        await ClockCycles(dut.clk, 1)
 
     # Initialize
     dut._log.info("Initializing instruction memory")
@@ -120,9 +130,10 @@ async def test_project(dut):
     await ClockCycles(dut.clk, 2)
 
     # Enable CPU
-    dut.ui_in[0].value = 1  # Enable signal from ui_in[0] port
+    await cpu_start()
     await ClockCycles(dut.clk, 1000)
-
+    
+    '''
     # Pause while running
     dut.ui_in[0].value = 0
     await ClockCycles(dut.clk, 2)
@@ -143,6 +154,13 @@ async def test_project(dut):
     await uart_read(1, 16)
     await ClockCycles(dut.clk, 2)
     dut.ui_in[0].value = 1
+    '''
+    
+    for _ in range(20):
+        await ClockCycles(dut.clk, 100)  # Wait for 1,000,000 clock cycles
+        await cpu_pause()
+        await uart_read(0, 0)  # Perform uart_read for address data_mem[0]
+        await cpu_start()
 
     await ClockCycles(dut.clk, 1000)  # Wait for 1,000 clock cycles
     cocotb.log.info("Test completed")
