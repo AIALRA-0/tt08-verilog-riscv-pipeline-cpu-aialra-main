@@ -1,41 +1,72 @@
-![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
+# RISC-V 5-Stage Pipeline CPU
 
-# Tiny Tapeout Verilog Project Template
+## Introduction
+This is a 5-stage pipeline CPU project based on the RISC-V instruction set.
 
-- [Read the documentation for project](docs/info.md)
+## Completed
+- Basic pipeline structure
+- Basic instruction set execution (RV32I without CSR)
+- EX stage forwarding unit
+- UART-based independent memory read/write
 
-## What is Tiny Tapeout?
+## To Be Implemented
+- More complete instruction set support (RV32I/others)
+- System operation
+- Multi-issue
+- Out-of-order execution
+- Timing optimization
 
-Tiny Tapeout is an educational project that aims to make it easier and cheaper than ever to get your digital and analog designs manufactured on a real chip.
+## Reference Pipeline Architecture
+![image](https://github.com/user-attachments/assets/e4b04ce4-fd53-48a1-ab15-ee8ad56b84f4)
 
-To learn more and get started, visit https://tinytapeout.com.
+## Schematic
+![image](https://github.com/user-attachments/assets/d1385b1f-b282-435e-81fb-10700d6a8599)
 
-## Set up your Verilog project
+## Supported Instructions
+- add: Addition
+- sub: Subtraction
+- and: Bitwise AND
+- or: Bitwise OR
+- xor: Bitwise XOR
+- addi: Addition with immediate
+- andi: Bitwise AND with immediate
+- ori: Bitwise OR with immediate
+- xori: Bitwise XOR with immediate
+- beq: Branch if equal
+- bne: Branch if not equal
+- mul: Signed multiplication
+- mulh: High-order signed multiplication
+- mulhu: High-order unsigned multiplication
+- mulhsu: High-order signed and unsigned mixed multiplication
+- div: Signed division
+- divu: Unsigned division
+- rem: Signed remainder
+- remu: Unsigned remainder
+- sll: Logical left shift
+- srl: Logical right shift
+- sra: Arithmetic right shift
+- slli: Immediate logical left shift
+- srli: Immediate logical right shift
+- srai: Immediate arithmetic right shift
+- slt: Set if less than
+- sltu: Set if unsigned less than
+- slti: Set if less than immediate
+- sltiu: Set if unsigned less than immediate
+- blt: Branch if less than
+- bge: Branch if greater than or equal
+- bltu: Branch if unsigned less than
+- bgeu: Branch if unsigned greater than or equal
+- jal: Jump and link (for function calls)
+- jalr: Register jump and link
+- sw: Store word
+- lw: Load word into register, at least one nop required to avoid hazard
+- lui: Load upper immediate into register
+- lb: Load byte, at least one nop required to avoid hazard
+- lh: Load halfword, at least one nop required to avoid hazard
+- lbu: Load unsigned byte, at least one nop required to avoid hazard
+- lhu: Load unsigned halfword, at least one nop required to avoid hazard
+- sb: Store byte
+- sh: Store halfword
+- auipc: Load 20-bit immediate into PC upper bits, adding current PC lower bits to form new address
 
-1. Add your Verilog files to the `src` folder.
-2. Edit the [info.yaml](info.yaml) and update information about your project, paying special attention to the `source_files` and `top_module` properties. If you are upgrading an existing Tiny Tapeout project, check out our [online info.yaml migration tool](https://tinytapeout.github.io/tt-yaml-upgrade-tool/).
-3. Edit [docs/info.md](docs/info.md) and add a description of your project.
-4. Adapt the testbench to your design. See [test/README.md](test/README.md) for more information.
-
-The GitHub action will automatically build the ASIC files using [OpenLane](https://www.zerotoasiccourse.com/terminology/openlane/).
-
-## Enable GitHub actions to build the results page
-
-- [Enabling GitHub Pages](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
-
-## Resources
-
-- [FAQ](https://tinytapeout.com/faq/)
-- [Digital design lessons](https://tinytapeout.com/digital_design/)
-- [Learn how semiconductors work](https://tinytapeout.com/siliwiz/)
-- [Join the community](https://tinytapeout.com/discord)
-- [Build your design locally](https://www.tinytapeout.com/guides/local-hardening/)
-
-## What next?
-
-- [Submit your design to the next shuttle](https://app.tinytapeout.com/).
-- Edit [this README](README.md) and explain your design, how it works, and how to test it.
-- Share your project on your social network of choice:
-  - LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [@TinyTapeout](https://www.linkedin.com/company/100708654/)
-  - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)
-  - X (formerly Twitter) [#tinytapeout](https://twitter.com/hashtag/tinytapeout) [@tinytapeout](https://twitter.com/tinytapeout)
+* Test project file is `./test/program.mem` 
