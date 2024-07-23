@@ -111,9 +111,6 @@ module UART_Bytes_TX #(
                 done = 1;  // Transmission complete signal active
                 next_state = IDLE;  // Return to idle state, waiting for the next transmission
             end
-			default: begin
-				next_state = IDLE;  // Default to IDLE state
-			end
         endcase
     end
 

@@ -236,9 +236,6 @@ module RISCV_Pipeline_CPU
     // MEM/WB input signals
     wire [31:0] read_data_wb;
     wire [31:0] data_wb;
-	
-	// Unused Signals
-    wire _unused = &{uart_tx_done};
     
 // *************************************
 // ***           Instantiation       ***

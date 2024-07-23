@@ -28,10 +28,7 @@ module ALU
 );
 
     reg [63:0] mult_result; // Used to store 64-bit multiplication result
-	
-	// Unused Signals
-    wire _unused = &{mult_result[31:0]};
-	
+
     always @(*) begin
         case (alu_control)
             6'b000001: result = a + b;  // Addition

@@ -47,7 +47,4 @@ module tt_um_aialra_riscv_pipeline_cpu (
 
     // Unused pins
     assign uio_out[7:1] = 7'b0000000; 
-	
-    wire _unused = &{uio_in, ena, ui_in[7:2], count_value[31:4]};
-    // Verilator lint_on UNUSED
 endmodule

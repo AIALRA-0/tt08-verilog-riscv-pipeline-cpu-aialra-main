@@ -42,9 +42,6 @@ module Data_Memory
 );
 
     assign data_mem0 = memory[0];
-	
-	// Unused Signals
-    wire _unused = &{address[31:9],address[1:0]};
     
     // Calculate the number of address bits
     function integer addr_bits;
