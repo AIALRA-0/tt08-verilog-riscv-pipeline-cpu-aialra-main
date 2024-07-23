@@ -30,6 +30,8 @@ module ALU
     reg [63:0] mult_result; // Used to store 64-bit multiplication result
 
     always @(*) begin
+		zero = 0;
+		mult_result = 0;
         case (alu_control)
             6'b000001: result = a + b;  // Addition
             6'b000010: result = a - b;  // Subtraction
