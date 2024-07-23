@@ -53,13 +53,13 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: "uart_tx"
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
+  uo[0]: "seg[0]"
+  uo[1]: "seg[1]"
+  uo[2]: "seg[2]"
+  uo[3]: "seg[3]"
+  uo[4]: "seg[4]"
+  uo[5]: "seg[5]"
+  uo[6]: "seg[6]"
   uo[7]: ""
 
   # Bidirectional pins
