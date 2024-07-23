@@ -21,7 +21,7 @@ By implementing pipelining technology, the CPU can process multiple instructions
 - Independent memory read/write based on UART
 
 ### Reference Pipeline Architecture
-![image](https://github.com/user-attachments/assets/e4b04ce4-fd53-48a1-ab15-ee8ad56b84f4)
+![image](ref_architecture.png)
 
 ### Supported Instructions
 - add: addition
@@ -80,7 +80,7 @@ By implementing pipelining technology, the CPU can process multiple instructions
 - Disable ui_in[0], use the UART interface uo_out[0] to send UART data packets to read instruction memory and data memory
 
 ### UART Data Packet Format
-![data_frame](https://github.com/user-attachments/assets/f64bc7ff-de2d-498a-bfa6-c8b2dd5403c6)
+![data_frame](customized_uart.png)
 
 ## External hardware
 
