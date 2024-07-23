@@ -18,6 +18,9 @@ module tt_um_aialra_riscv_pipeline_cpu (
 
     wire reset;
     assign reset = !rst_n;
+	
+	// Data memory read count value
+    wire [31:0] count_value;
 
     // CPU instance
     RISCV_Pipeline_CPU #(
@@ -28,12 +31,9 @@ module tt_um_aialra_riscv_pipeline_cpu (
         .reset(reset),
         .enable(ui_in[0]),  // Get enable signal from ui_in
         .uart_rx(ui_in[1]),  // Get UART RX signal from ui_in
-        .uart_tx(uio_out[0])  // Send UART TX signal to uo_out
+        .uart_tx(uio_out[0]),  // Send UART TX signal to uo_out
+		.data_mem0(count_value) // Send Data memory[0] read to count value
     );
-
-    // Data memory read count value
-    wire [31:0] count_value;
-    assign count_value = cpu_inst.data_mem_inst.memory[0];
 
     // Seven-segment display module
     Seven_Segment_Display display_inst 

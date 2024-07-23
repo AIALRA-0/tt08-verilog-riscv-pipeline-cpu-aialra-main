@@ -34,7 +34,8 @@ module RISCV_Pipeline_CPU
     input wire reset, // Global reset signal
     input wire enable, // PC update enable signal
     input wire uart_rx, // uart_rx
-    output wire uart_tx // uart_tx
+    output wire uart_tx, // uart_tx
+	output wire [31:0] data_mem0 // data_mem[0]
 );
 
 // *************************************
@@ -588,7 +589,8 @@ module RISCV_Pipeline_CPU
         .uart_rx_data_in(uart_rx_data_out), // UART data input
         .rw_flag(rw_flag),             // Read/Write flag
         .uart_tx_data_out(data_uart_tx_data_out), // UART data output
-        .data_mem_tx_data_ready(data_mem_tx_data_ready)
+        .data_mem_tx_data_ready(data_mem_tx_data_ready),
+		.data_mem0(data_mem0)
     );
     
     // Instantiate data memory handler

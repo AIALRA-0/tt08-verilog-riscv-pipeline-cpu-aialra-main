@@ -38,9 +38,12 @@ module Data_Memory
     input wire [31:0] uart_rx_data_in, // UART data input
     input wire rw_flag,        // Read/Write flag
     output reg [41:0] uart_tx_data_out, // UART data output
-    output reg data_mem_tx_data_ready // Data ready signal
+    output reg data_mem_tx_data_ready, // Data ready signal
+	output wire [31:0] data_mem0 // Data from mem[0]
 );
 
+	assign data_mem0 = memory[0];
+	
     // Calculate the number of address bits
     function integer addr_bits;
         input integer depth;
