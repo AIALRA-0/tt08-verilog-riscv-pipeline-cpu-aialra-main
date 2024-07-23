@@ -25,7 +25,7 @@ module tt_um_aialra_riscv_pipeline_cpu (
     // CPU instance
     RISCV_Pipeline_CPU #(
         .INSTR_MEM_DEPTH(128), // Specify instruction memory depth
-        .DATA_MEM_DEPTH(128)   // Specify data memory depth
+        .DATA_MEM_DEPTH(32)   // Specify data memory depth
     ) cpu_inst (
         .clk(clk), // Clock
         .reset(reset),
