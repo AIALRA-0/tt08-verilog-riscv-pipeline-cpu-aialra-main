@@ -63,6 +63,11 @@ module UART_Bytes_RX #(
             state <= IDLE;  // Enter idle state on reset
             byte_counter <= 0;  // Reset byte counter
             data_out <= 0;  // Clear output data on reset
+			done <= 0;  // Clear done signal on reset
+            rw_flag <= 0;  // Clear read/write flag on reset
+            target_mem_type <= 0;  // Clear target memory type on reset
+            target_addr <= 0;  // Clear target address on reset
+            header <= 0;  // Clear header on reset
         end else begin
             state <= next_state;  // Enter next state
             if (state == IDLE) begin
@@ -79,7 +84,6 @@ module UART_Bytes_RX #(
     always @(*) begin
         next_state = state;  // Default to current state
         done = 0;  // Default receive not done
-
         case (state)
             IDLE: begin
                 if (rx == 0) begin  // Detect start bit
