@@ -106,6 +106,7 @@ module Instruction_Memory
             end else begin
                 uart_tx_data_out <= {1'b1, target_addr, memory[target_addr[ADDR_BITS-1:0]]}; // Read data to UART data output
                 instr_mem_tx_data_ready <= 1; // Data ready after read operation
+                $display("Read Data from Instruction Memory: uart_tx_data_out = %h", uart_tx_data_out); // Print uart_tx_data_out
             end
         end else begin
             instr_mem_tx_data_ready <= 0; // Data not ready in other cases
