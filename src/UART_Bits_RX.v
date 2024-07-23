@@ -96,6 +96,12 @@ module UART_Bits_RX #(
             START_NEXT: begin
                 next_state = RECEIVE_BITS;  // Directly enter receive data bits state
             end
+<<<<<<< HEAD
+=======
+			default: begin
+				next_state = IDLE;  // Default to IDLE state
+			end
+>>>>>>> parent of 88fffc3 (Fixed infered latches)
         endcase
     end
 
