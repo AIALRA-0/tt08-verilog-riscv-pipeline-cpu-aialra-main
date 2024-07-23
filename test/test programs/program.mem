@@ -1,0 +1,75 @@
+// RISC-V Instruction Memory
+@0000
+00000013 // 0x0000: nop
+00000093 // 0x0004: addi x1, x0, 0          // x1 = 0
+00900113 // 0x0008: addi x2, x0, 9          // x2 = 9
+00000013 // 0x000c: nop                     // Loop start (not equal)
+00000013 // 0x0010: nop 
+00000013 // 0x0014: nop
+00000013 // 0x0018: nop                     // Loop start (equal) waiting for x1 to be zeroed
+00102023 // 0x001c: sw x1, 0(x0)            // x1 -> mem[0]
+00002183 // 0x0020: lw x3, 0(x0)            // mem[0] -> x3
+00108093 // 0x0024: addi x1, x1, 1          // x1 += 1
+00000013 // 0x0028: nop                     // Wait, ensure x3 is synchronized
+fe2190e3 // 0x002c: bne x3, x2, -32         // If x3 != x2, jump to loop start (not equal)
+00000093 // 0x0030: addi x1, x0, 0          // x1 = 0, reset counter
+00000193 // 0x0034: addi x3, x0, 0          // x3 = 0
+01800067 // 0x0038: jalr x0, 24(x0)         // Unconditional jump to loop start (equal)
+
+// Valid Instructions
+// add: addition
+// sub: subtraction
+// and: bitwise and
+// or : bitwise or
+// xor: bitwise xor
+// addi: addition with immediate
+// andi: bitwise and with immediate
+// ori : bitwise or with immediate
+// xori: bitwise xor with immediate
+// beq: branch if equal
+// bne : branch if not equal
+// mul: signed multiplication
+// mulh: high signed multiplication
+// mulhu: high unsigned multiplication
+// mulhsu: high signed and unsigned mixed multiplication
+// div: signed division
+// divu: unsigned division
+// rem: signed remainder
+// remu: unsigned remainder
+// sll: logical left shift
+// srl: logical right shift
+// sra: arithmetic right shift
+// slli: logical left shift with immediate
+// srli: logical right shift with immediate
+// srai: arithmetic right shift with immediate
+// slt: set if less than
+// sltu: set if unsigned less than
+// slti: set if less than immediate
+// sltiu: set if unsigned less than immediate
+// blt: branch if less than
+// bge : branch if greater than or equal       
+// bltu : branch if unsigned less than      
+// bgeu : branch if unsigned greater than or equal 
+// jal: jump and link (used for function calls)
+// jalr: register jump and link
+// sw: store word
+// lw: load word to register, at least one nop is required to avoid hazards
+// lui: load upper immediate to register
+// lb: load byte, at least one nop is required to avoid hazards
+// lh: load half-word, at least one nop is required to avoid hazards
+// lbu: load unsigned byte, at least one nop is required to avoid hazards
+// lhu: load unsigned half-word, at least one nop is required to avoid hazards
+// sb: store byte
+// sh: store half-word
+// auipc: add upper immediate to PC
+
+// Instructions to be implemented
+// FENCE: used for memory and I/O synchronization barriers
+// ECALL: environment call, used for system calls or OS services
+// EBREAK: environment break, used for debugging purposes
+// CSRRW: atomic read-write control and status register
+// CSRRS: atomic read and set control and status register
+// CSRRC: atomic read and clear control and status register
+// CSRRWI: atomic read-write control and status register with immediate
+// CSRRSI: atomic read and set control and status register with immediate
+// CSRRCI: atomic read and clear control and status register with immediate

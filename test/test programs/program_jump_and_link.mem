@@ -1,0 +1,46 @@
+// RISC-V Instruction Memory
+@0000
+
+// Initialize registers
+00200113 // addi x2, x0, 2  // x2 = 2
+00300193 // addi x3, x0, 3  // x3 = 3
+00400213 // addi x4, x0, 4  // x4 = 4
+00000013 // nop
+00000013 // nop
+00000013 // nop
+00000013 // nop
+
+// Test jump and link instructions
+020000ef // jal x1, 32      // jump -> PC+32 -> 60  // 28
+00800113 // addi x2, x0, 8  // x2 = 8              // 32
+00c00193 // addi x3, x0, 12 // x3 = 12
+01000213 // addi x4, x0, 16 // x4 = 16
+030000ef // jal x1, 48      // jump -> PC+48 -> 92
+00000013 // nop
+00000013 // nop
+014000ef // jal x1, 20      // skip this section in sequential execution
+00400113 // addi x2, x0, 4  // x2 = 4              // 60
+00600193 // addi x3, x0, 6  // x3 = 6
+00800213 // addi x4, x0, 8  // x4 = 8
+000080e7 // jalr x1, 0(x1)  // jump -> 32
+00000013 // nop
+00000013 // nop
+00000013 // nop
+018000ef // jal x1, 24      // skip this section in sequential execution
+01000113 // addi x2, x0, 16 // x2 = 16             // 92
+01800193 // addi x3, x0, 24 // x3 = 24
+02000213 // addi x4, x0, 32 // x4 = 32
+08400293 // addi x5, x0, 132// x5 = 132
+000280e7 // jalr x1, 0(x5)  // jump -> 132
+00000013 // nop                                  // 112
+00000013 // nop
+00000013 // nop
+00000013 // nop
+014000ef // jal x1, 20      // skip the link code in sequential execution
+02000113 // addi x2, x0, 32 // x2 = 32             // 132
+03000193 // addi x3, x0, 48 // x3 = 48
+04000213 // addi x4, x0, 64 // x4 = 64
+000080e7 // jalr x1, 0(x1)  // jump -> 112
+04000113 // addi x2, x0, 64 // x2 = 64
+06000193 // addi x3, x0, 96 // x3 = 96
+08000213 // addi x4, x0, 128// x4 = 128

@@ -1,0 +1,33 @@
+// RISC-V Instruction Memory
+@0000
+
+// Initialize registers
+ff600093 // addi x1, x0, -10  // x1 = -10
+fec00113 // addi x2, x0, -20  // x2 = -20
+01e00193 // addi x3, x0, 30   // x3 = 30
+00000013 // nop
+00000013 // nop
+00000013 // nop
+00000013 // nop
+00000013 // nop
+
+// Test multiplication and division
+022082b3 // mul x5, x1, x2    // x5 = x1 * x2 = 200
+02309333 // mulh x6, x1, x3   // x6 = high 32 bits of (-10 * 30) = -1
+12c00193 // addi x3, x0, 300  // x3 = 300
+19000213 // addi x4, x0, 400  // x4 = 400
+0241b3b3 // mulhu x7, x3, x4  // x7 = high 32 bits of (300 * 400) = 0
+02412433 // mulhsu x8, x2, x4 // x8 = high 32 bits of (-20 * 400) = 399
+022244b3 // div  x9, x4, x2   // x9 = 400 / -20 = -20
+00a00093 // addi x1, x0, 10   // x1 = 10
+01e00193 // addi x3, x0, 30   // x3 = 30
+02800213 // addi x4, x0, 40   // x4 = 40
+0221c533 // div  x10, x3, x2  // x10 = 30 / -20 = -1
+0221e5b3 // rem  x11, x3, x2  // x11 = 30 % -20 = 10 
+01400113 // addi x2, x0, 20   // x2 = 20
+0221d633 // divu  x12, x3, x2 // x12 = 30 / 20 = 1
+0200c6b3 // div  x13, x1, x0  // Should trigger divide by zero exception
+0200d733 // divu  x14, x1, x0 // Should trigger divide by zero exception
+0221f7b3 // remu  x15, x3, x2 // x15 = 30 % 20 = 10 
+0200e833 // rem  x16, x1, x0  // Should trigger divide by zero exception
+0200f8b3 // remu  x17, x1, x0 // Should trigger divide by zero exception

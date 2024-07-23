@@ -5,23 +5,47 @@
 
 `default_nettype none
 
-module tt_um_example (
-    input  wire [7:0] ui_in,    // Dedicated inputs
-    output wire [7:0] uo_out,   // Dedicated outputs
-    input  wire [7:0] uio_in,   // IOs: Input path
-    output wire [7:0] uio_out,  // IOs: Output path
-    output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
-    input  wire       ena,      // always 1 when the design is powered, so you can ignore it
-    input  wire       clk,      // clock
-    input  wire       rst_n     // reset_n - low to reset
+module tt_um_aialra_riscv_pipeline_cpu (
+    input  wire [7:0] ui_in,    // Dedicated input
+    output wire [7:0] uo_out,   // Dedicated output
+    input  wire [7:0] uio_in,   // IO: input path
+    output wire [7:0] uio_out,  // IO: output path
+    output wire [7:0] uio_oe,   // IO: enable path (active high: 0=input, 1=output)
+    input  wire       ena,      // Always 1 when the design is powered on, can be ignored
+    input  wire       clk,      // Clock signal
+    input  wire       rst_n     // Reset signal - active low
 );
 
-  // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+    wire reset;
+    assign reset = !rst_n;
+    assign uio_out[1] = clk;
 
-  // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+    // CPU instance
+    RISCV_Pipeline_CPU #(
+        .INSTR_MEM_DEPTH(128), // Specify instruction memory depth
+        .DATA_MEM_DEPTH(128)   // Specify data memory depth
+    ) cpu_inst (
+        .clk(clk), // Clock
+        .reset(reset),
+        .enable(ui_in[0]),  // Get enable signal from ui_in
+        .uart_rx(ui_in[1]),  // Get UART RX signal from ui_in
+        .uart_tx(uio_out[0])  // Send UART TX signal to uo_out
+    );
 
+    // Data memory read count value
+    wire [31:0] count_value;
+    assign count_value = cpu_inst.data_mem_inst.memory[0];
+
+    // Seven-segment display module
+    Seven_Segment_Display display_inst 
+    (
+        .value(count_value[3:0]), // Only take the lower 4 bits
+        .seg(uo_out[6:0])
+    );
+
+    // Configure uio_oe signal to ensure uio_out output is enabled, 0=input, 1=output
+    assign uio_oe = 8'b11111111;
+
+    // Unused pins
+    assign uio_out[7:2] = 6'b000000; 
 endmodule

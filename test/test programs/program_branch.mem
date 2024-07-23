@@ -1,0 +1,34 @@
+// RISC-V Instruction Memory
+@0000
+
+// Initialize registers
+00400093  // addi x1, x0, 4   // x1 = 4
+00400113  // addi x2, x0, 4   // x2 = 4 
+ff000193  // addi x3, x0, -16 // x3 = -16 
+00200213  // addi x4, x0, 2   // x4 = 2 
+00000013  // nop
+00000013  // nop
+00000013  // nop
+00000013  // nop
+00000013  // nop
+
+// Test branch instructions
+06308263  // beq x1, x3, 100  // Do not jump
+00208263  // beq x1, x2, 4    // x1 == x2 jump
+06209263  // bne x1, x2, 100  // Do not jump
+00309263  // bne x1, x3, 4    // x1 != x3 jump 
+0620c263  // blt x1, x2, 100  // Do not jump
+0011c263  // blt x3, x1, 4    // x3 < x1 jump 
+0620e263  // bltu x1, x2, 100 // Do not jump
+00126263  // bltu x4, x1, 4   // x4 < x1 jump 
+0611d263  // bge x3, x1, 100  // Do not jump
+00325263  // bge x4, x3, 4    // x4 > x3 jump 
+06127263  // bgeu x4, x1, 100 // Do not jump
+0040f463  // bgeu x1, x4, 8   // x1 > x4 jump 
+08000293  // addi x5, x0, 128 // If it jumps here, x5 = 128
+10000313  // addi x6, x0, 256 // If it jumps here, x6 = 256 -> It should end here
+00000013  // nop
+00000013  // nop
+00000013  // nop
+00000013  // nop
+00000013  // nop

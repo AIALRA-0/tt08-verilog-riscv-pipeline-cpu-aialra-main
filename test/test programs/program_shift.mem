@@ -1,0 +1,25 @@
+// RISC-V Instruction Memory
+@0000
+
+// Initialize registers
+00400093 // addi x1, x0, 4     // x1 = 4
+00200113 // addi x2, x0, 2     // x2 = 2
+ff000193 // addi x3, x0, -16   // x3 = -16
+00000013 // nop
+00000013 // nop
+00000013 // nop
+00000013 // nop
+00000013 // nop
+
+// Test shift instructions
+002092b3 // sll x5, x1, x2     // x5 = x1 << 2 = 16
+0021d333 // srl x6, x3, x2     // x6 = x3 >> 2 = 1073741820
+4021d3b3 // sra x7, x3, x2     // x7 = x3 >> 2 = -4
+00209413 // slli x8, x1, 2     // x8 = x1 << 2 = 16
+0021d493 // srli x9, x3, 2     // x9 = x3 >> 2 = 1073741820
+4021d513 // srai x10, x3, 2    // x10 = x3 >> 2 = -4
+00000013 // nop
+00000013 // nop
+00000013 // nop
+00000013 // nop
+00000013 // nop

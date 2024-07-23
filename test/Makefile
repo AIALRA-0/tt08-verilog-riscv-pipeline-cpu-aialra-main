@@ -5,7 +5,28 @@
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = project.v
+PROJECT_SOURCES = project.v \
+adder.v \
+ALU.v \
+ALU_Control.v \
+Control_Unit.v \
+Data_Memory.v \
+Data_Memory_Handler.v \
+Forwarding_Unit.v \
+Immediate_Generator.v \
+Instruction_Memory.v \
+mux2to1.v \
+mux3to1.v \
+PC.v \
+pipeline_register.v \
+Register_File.v \
+RISCV_Pipeline_CPU.v \
+RISCV_Pipeline_Display_Counter.v \
+Seven_Segment_Display.v \
+UART_Bits_RX.v \
+UART_Bits_TX.v \
+UART_Bytes_RX.v \
+UART_Bytes_TX.v
 
 ifneq ($(GATES),yes)
 
