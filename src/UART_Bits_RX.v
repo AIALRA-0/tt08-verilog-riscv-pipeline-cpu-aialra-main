@@ -96,6 +96,9 @@ module UART_Bits_RX #(
             START_NEXT: begin
                 next_state = RECEIVE_BITS;  // Directly enter receive data bits state
             end
+			default: begin
+				next_state = IDLE;  // Default to IDLE state
+			end
         endcase
     end
 
