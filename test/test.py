@@ -10,7 +10,7 @@ async def test_project(dut):
     dut._log.info("Start")
     
     # Set instruction memory size
-    INSTR_MEM_SIZE = 32
+    INSTR_MEM_SIZE = 64
 
     # Set clock period to 10 nanoseconds (100 MHz)
     clock = Clock(dut.clk, 10, units="ns")
@@ -156,7 +156,7 @@ async def test_project(dut):
     dut.ui_in[0].value = 1
     '''
     
-    for _ in range(4):
+    for _ in range(20):
         await ClockCycles(dut.clk, 100)  # Wait for 1,000,000 clock cycles
         await cpu_pause()
         await uart_read(0, 0)  # Perform uart_read for address data_mem[0]

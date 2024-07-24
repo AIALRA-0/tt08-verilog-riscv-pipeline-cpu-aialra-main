@@ -75,33 +75,32 @@ module Data_Memory
 	reg mem_reset_done;
 	
 	always @(posedge clk or posedge reset) begin
-		if (reset) begin
-			mem_reset_done <= 0;
-			mem_reset_val <= 32'b0;
-		end else if (!mem_reset_done) begin
-			// Continue resetting memory in sequential logic
-			memory[mem_reset_val] <= 32'b0;
-			mem_reset_val <= mem_reset_val + 1;
-			if (mem_reset_val == DEPTH - 1) begin
-				mem_reset_done <= 1;
-			end
-		end else begin
-			if (MemWrite) begin
-				memory[address[ADDR_BITS+1:2]] <= write_data; // Store write data to the corresponding address
-				data_mem_tx_data_ready <= 0;
-			end else if (!enable && write_mem_req && target_mem_type == 0) begin
-				if (rw_flag) begin
-					memory[target_addr[ADDR_BITS-1:0]] <= uart_rx_data_in; // Write UART data to target address
-					data_mem_tx_data_ready <= 0;
-				end else begin
-					uart_tx_data_out <= {1'b0, target_addr, memory[target_addr[ADDR_BITS-1:0]]}; // Read data to UART data output
-					data_mem_tx_data_ready <= 1; // Data ready after read operation
-				end
-			end else begin
-				data_mem_tx_data_ready <= 0; // Data not ready in other cases
-			end
-		end
-	end
+        if (reset) begin
+            mem_reset_done <= 0;
+            mem_reset_val <= 32'b0;
+        end else if (!mem_reset_done) begin
+            // Continue resetting memory in sequential logic
+            memory[mem_reset_val] <= 32'b0;
+            mem_reset_val <= mem_reset_val + 1;
+            if (mem_reset_val == DEPTH - 1) begin
+                mem_reset_done <= 1;
+            end
+        end else if (MemWrite) begin
+            memory[address[ADDR_BITS+1:2]] <= write_data; // Store write data to the corresponding address
+            data_mem_tx_data_ready <= 0;
+        end else if (!enable && write_mem_req && target_mem_type == 0) begin
+            if (rw_flag) begin
+                memory[target_addr[ADDR_BITS-1:0]] <= uart_rx_data_in; // Write UART data to target address
+                data_mem_tx_data_ready <= 0;
+            end else begin
+                uart_tx_data_out <= {1'b0, target_addr, memory[target_addr[ADDR_BITS-1:0]]}; // Read data to UART data output
+                data_mem_tx_data_ready <= 1; // Data ready after read operation
+            end
+        end else begin
+            data_mem_tx_data_ready <= 0; // Data not ready in other cases
+        end
+    end
+
 
 
     // Read operation (combinational logic)

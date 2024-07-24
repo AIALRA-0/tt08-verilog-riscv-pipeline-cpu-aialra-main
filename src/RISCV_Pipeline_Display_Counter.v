@@ -28,21 +28,21 @@ module RISCV_Pipeline_Display_Counter
     output wire [6:0] seg // Seven-segment display output
 );
 
+    // Read the counter value from data memory
+    wire [31:0] count_value;
+
     // Instantiate RISCV_PIPELINE_CPU module with specified instruction memory and data memory depth
     RISCV_Pipeline_CPU #(
-        .INSTR_MEM_DEPTH(32), // Specify instruction memory depth
-        .DATA_MEM_DEPTH(16)   // Specify data memory depth
+        .INSTR_MEM_DEPTH(64), // Specify instruction memory depth
+        .DATA_MEM_DEPTH(32)   // Specify data memory depth
     ) cpu_inst (
         .clk(clk), // Clock
         .reset(reset),
         .enable(enable),
         .uart_rx(uart_rx),
-        .uart_tx(uart_tx)
+        .uart_tx(uart_tx),
+        .data_mem0(count_value)
     );
-
-    // Read the counter value from data memory
-    wire [31:0] count_value;
-    assign count_value = cpu_inst.data_mem_inst.memory[0];
 
     // Seven-segment display module
     Seven_Segment_Display display_inst 

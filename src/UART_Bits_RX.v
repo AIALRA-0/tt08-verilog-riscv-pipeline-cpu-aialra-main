@@ -46,6 +46,7 @@ module UART_Bits_RX #(
             state <= IDLE;  // Enter idle state on reset
             bit_counter <= 0;  // Reset bit counter
             data_reg <= 0;     // Clear data register
+            data_out <= 0;  // Clear data register
         end else begin
             state <= next_state;  // Enter next state
             if (state == RECEIVE_BITS) begin
