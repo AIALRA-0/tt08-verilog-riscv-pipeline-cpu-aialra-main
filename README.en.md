@@ -289,8 +289,10 @@ Table 10.1 Current verification results
 | UART data-memory readback | Log matched | Address 14 returned the fixed write value |
 | Program fixtures | 12 `.mem` files | Only `test/program.mem` runs automatically by default |
 | Python assertions | 0 | The test is log-oriented and does not prove all 45 instructions correct |
-| Gate-level simulation | Not run | No local gate-level netlist or PDK is available |
-| GDS and precheck | Awaiting remote workflow | No local physical-design environment is available |
+| Remote RTL workflow | Passed | GitHub Actions completed Icarus and Cocotb verification on commit `3ad2355` |
+| Gate-level simulation | Not run | The GDS flow stopped before the gate-level stage |
+| GDS and precheck | Failed | OpenROAD reported 135.30% placement utilization, above 100% |
+| Datasheet build | Failed | The Tiny Tapeout docs action could not find the `typst` executable |
 
 </div>
 
@@ -334,8 +336,9 @@ Table 12.1 GitHub Actions
 
 </div>
 
-All four workflow definitions were active before this revision, but GitHub returned no historical runs
-The remote workflow pages after publication are the final evidence
+All four workflows are active, with the FPGA workflow available only by manual dispatch
+For commit `3ad2355`, the RTL workflow passed, the GDS workflow stopped at 135.30% placement utilization, and the docs workflow stopped because its environment lacked `typst`
+Both failures are outside the README change itself and remain visible through failure badges so incomplete delivery is not presented as success
 
 ## 13 Development roadmap
 
