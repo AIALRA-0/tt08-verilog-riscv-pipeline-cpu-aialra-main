@@ -1,0 +1,9 @@
+# Keep HDL, tests, metadata, and documentation stable across operating systems.
+*.v text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.mem text eol=lf
+Makefile text eol=lf

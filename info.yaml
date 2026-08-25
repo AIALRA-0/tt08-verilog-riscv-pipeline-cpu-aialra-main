@@ -1,8 +1,8 @@
 # Tiny Tapeout project information
 project:
   title:        "RISC-V 5-Stage Pipeline CPU"      # Project title
-  author:       "Lucas Ding"      # Your name
-  discord:      "aialra"      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
+  author:       "AIALRA-0 Contributors"      # Public organization-level attribution
+  discord:      ""      # Private contact identifiers stay outside the public repository
   description:  "A RISC-V 5-stage pipeline CPU implementation."      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     100000000       # Clock frequency in Hz (e.g., 100 MHz)
